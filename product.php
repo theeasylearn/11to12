@@ -95,7 +95,7 @@ require_once('connection.php');
                                 </td>
                                 <td valign='top'><?php echo $value[5] ?></td>
                                 <td valign='top'>
-                                    <a href="edit-product.php">Edit</a>
+                                    <a href="edit_product.php?id=<?php echo $value[0]; ?>">Edit</a>
                                     <a href="delete-product.php?id=<?php echo $value[0]; ?>">Delete</a>
                                 </td>
                             </tr>
