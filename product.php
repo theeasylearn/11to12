@@ -13,8 +13,9 @@ require_once('connection.php');
 <body>
     <table width='100%' cellpadding='2' border="2">
         <tr>
-            <td width='25%'>
-                <form action="insert_product.php" method="post" enctype="multipart/form-data">
+            <td width='25%' valign='top'>
+                <form action="insert_product.php" method="post" 
+                enctype="multipart/form-data">
                     <table border="1" width='100%'>
                         <tr>
                             <td>
@@ -66,21 +67,38 @@ require_once('connection.php');
                 </form>
             </td>
             <td valign='top'>
-                <table width='100%' border='2'>
+                <table width='100%' border='2' cellpadding='10'>
                     <thead>
                         <tr>
-                            <td>Sr</td>
-                            <td>title</td>
-                            <td>price</td>
-                            <td>Quantity</td>
-                            <td>photo</td>
-                            <td width='25%'>Detail</td>
-                            <td>Action</td>
+                            <th colspan="7" align="right">
+                                <form action="product.php" method="post">
+                                    <input type="text" name="productname" id="productname" placeholder="Product Name" required value=" " />
+                                    <input name="search" type="submit" value="Search" />
+                                    <input name="clear" type="submit" value="clear all" />
+                                </form>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Sr</th>
+                            <th>title</th>
+                            <th>price</th>
+                            <th>Quantity</th>
+                            <th>photo</th>
+                            <th width='25%'>Detail</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM `product` order by id desc";
+                        if (isset($_POST['search']) == true) {
+                            $productname = $_POST['productname'];
+                            $sql = "SELECT * FROM `product` where title like '%$productname%' order by id desc";
+                        } else if (isset($_POST['clear']) == true) {
+                            $sql = "SELECT * FROM `product` order by id desc";
+                        } else {
+                            $sql = "SELECT * FROM `product` order by id desc";
+                        }
+                        //echo $sql;
                         $data = mysqli_query($link, $sql);
                         $table = mysqli_fetch_all($data);
                         foreach ($table as  $value) {
@@ -91,12 +109,12 @@ require_once('connection.php');
                                 <td valign='top'><?php echo $value[2] ?></td>
                                 <td valign='top'><?php echo $value[3] ?></td>
                                 <td valign='top'>
-                                    <img src="<?php echo $value[4] ?>" height="150" alt="">
+                                    <img src="images/<?php echo $value[4] ?>" height="150" alt="">
                                 </td>
                                 <td valign='top'><?php echo $value[5] ?></td>
                                 <td valign='top'>
                                     <a href="edit_product.php?id=<?php echo $value[0]; ?>">Edit</a>
-                                    <a href="delete-product.php?id=<?php echo $value[0]; ?>">Delete</a>
+                                    <a href="delete-product.php?id=<?php echo $value[0]; ?>&filename=<?php echo $value[4] ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php }  ?>
