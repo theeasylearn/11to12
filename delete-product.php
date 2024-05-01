@@ -3,7 +3,7 @@
     $id = $_REQUEST['id'];
     $filename = $_REQUEST['filename'];
     $sql = "delete from product where id = '$id'";
-    mysqli_query($link,$sql) or die();
+    mysqli_query($link,$sql) or die(mysqli_error($link));
     //file delete on disk 
     unlink("images/$filename");
     header("location:product.php");

@@ -22,24 +22,34 @@ $table = mysqli_fetch_array($data);
                 <div class="card mt-5 shadow">
                     <div class="card-header h2 text-bg-success">Edit Product </div>
                     <div class="card-body">
-                        <form action="update_product.php" method="post">
+                        <form action="update_product.php" method="post" 
+                        enctype="multipart/form-data" >
                             <div class="form-group">
                                 <label class="form-label" for="">Enter title for product </label>
-                                <input type="text" name="title" class="form-control" placeholder="Enter value of title " value="<?php echo $table['title'] ?>">
+                                <input type="text" name="title" class="form-control" placeholder="Enter value of title " value="<?php echo $table['title'] ?>" required> 
                                 <input type="hidden" name="id" class="form-control" value="<?php echo $_REQUEST['id'] ?>">
+                                <input type="hidden" name="oldphoto" class="form-control" value="<?php echo $table['photo']; ?>">
+
+                                Existing photo <br/>
+                                <img class="img-fluid" src="images/<?php echo $_REQUEST['filename']; ?>" style="height:200px !important" />
+                            </div>
+                            <div class="form-group mt-3">
+                                <label class="form-label" for="">Select Photo </label>
+                                <input type="file" name="photo" class="form-control" accept="image/*"  />
                             </div>
                             <div class="form-group mt-3">
                                 <label class="form-label" for="">Enter price for product </label>
-                                <input type="number" name="price" class="form-control" placeholder="Enter value of price " value="<?php echo $table['price'] ?>">
+                                <input type="number" name="price" class="form-control" placeholder="Enter value of price " value="<?php echo $table['price'] ?>" required />
                             </div>
                             <div class="form-group mt-3">
                                 <label class="form-label" for="">Enter quantity for product </label>
-                                <input type="number" name="quantity" class="form-control" placeholder="Enter value of quantity " value="<?php echo $table['quantity'] ?>">
+                                <input type="number" name="quantity" class="form-control" placeholder="Enter value of quantity " value="<?php echo $table['quantity'] ?>" required />
                             </div>
                             <div class="form-group mt-3">
                                 <label class="form-label" for="">Enter detail for product </label>
-                                <textarea name="detail" class="form-control" id="" cols="30" rows="2"><?php echo $table['detail'] ?></textarea>
+                                <textarea name="detail" class="form-control" id="" cols="30" rows="2" required><?php echo $table['detail'] ?></textarea>
                             </div>
+
                             <div class="text-end mt-3">
                                 <button type="submit" class="btn btn-success">Update</button>
                                 <button type="reset" class="btn btn-danger">Clear All</button>
